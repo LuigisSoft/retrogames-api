@@ -6,6 +6,11 @@ import com.luigisback.retrogames_api.dto.VideojuegoRequest;
 import com.luigisback.retrogames_api.dto.VideojuegoResponse;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+
+
 
 @Service
 public class VideojuegoService {
@@ -15,6 +20,23 @@ public class VideojuegoService {
     public VideojuegoService(VideojuegoRepository videojuegoRepository) {
         this.videojuegoRepository = videojuegoRepository;
     }
+
+     public List <VideojuegoResponse>obtenerVideojuego(){
+        return videojuegoRepository.findAll().stream()
+                .map( videojuego->{
+                    VideojuegoResponse response= new VideojuegoResponse();
+                    response.setId(videojuego.getId());
+                    response.setTitulo(videojuego.getTitulo());
+                    response.setPrecio(videojuego.getPrecio());
+                    response.setPlataforma(videojuego.getPlataforma());
+                    response.setEstado(videojuego.getEstado());
+                    response.setYear(videojuego.getYear());
+
+                    return response;
+                })
+                .collect(Collectors.toList());
+    }
+
 
 
 

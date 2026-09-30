@@ -7,6 +7,8 @@ import com.luigisback.retrogames_api.dto.VideojuegoRequest;
 import com.luigisback.retrogames_api.dto.VideojuegoResponse;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/videojuegos")
 public class VideoJuegoController {
@@ -17,15 +19,17 @@ public class VideoJuegoController {
         this.videojuegoService = videojuegoService;
     }
 
-    @GetMapping
-    public String Videojuego() {
-        return "Hola, soy la api";
-    }
-    @PostMapping
 
-    public VideojuegoResponse crearVideojuego(@RequestBody VideojuegoRequest request){
+    //creo los videojuegos
+    @PostMapping
+    public VideojuegoResponse crearVideojuegos(@RequestBody VideojuegoRequest request){
         return  videojuegoService.crearVideojuego(request);
     }
+    //obtengo todos los videjuegos
+   @GetMapping
+    public List<VideojuegoResponse> obtenerVideojeugos(){
+        return videojuegoService.obtenerVideojuego();
+   }
 
 
 
