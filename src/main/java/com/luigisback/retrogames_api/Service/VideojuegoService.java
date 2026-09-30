@@ -7,7 +7,6 @@ import com.luigisback.retrogames_api.dto.VideojuegoResponse;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 
@@ -20,6 +19,7 @@ public class VideojuegoService {
     public VideojuegoService(VideojuegoRepository videojuegoRepository) {
         this.videojuegoRepository = videojuegoRepository;
     }
+
 
      public List <VideojuegoResponse>obtenerVideojuego(){
         return videojuegoRepository.findAll().stream()
@@ -43,7 +43,6 @@ public class VideojuegoService {
     public VideojuegoResponse crearVideojuego(VideojuegoRequest request){
 
         Videojuego videojuego=new Videojuego();
-
         videojuego.setTitulo(request.getTitulo());
         videojuego.setPlataforma(request.getPlataforma());
         videojuego.setYear(request.getYear());
@@ -64,4 +63,40 @@ public class VideojuegoService {
 
 
     }
+
+    public VideojuegoResponse actualizarVideojuego(Long id, VideojuegoRequest request){
+        Videojuego videojuego=videojuegoRepository.findById(id)
+                .orElseThrow(()->new RuntimeException("Videojuego no encontrado"));
+
+        videojuego.setTitulo(request.getTitulo());
+        videojuego.setPlataforma(request.getPlataforma());
+        videojuego.setYear(request.getYear());
+        videojuego.setEstado(request.getEstado());
+        videojuego.setPrecio(request.getPrecio());
+
+        Videojuego actualizado=videojuegoRepository.save(videojuego);
+        VideojuegoResponse response=new VideojuegoResponse();
+
+        response.setId(actualizado.getId());
+        response.setTitulo(actualizado.getTitulo());
+        response.setPlataforma(actualizado.getPlataforma());
+        response.setYear(actualizado.getYear());
+        response.setPrecio(actualizado.getPrecio());
+        response.setEstado(actualizado.getEstado());
+
+        return response;
+
+
+    }
+
+    public void  eliminarVidejuego(Long id){
+        Videojuego videojuego=videojuegoRepository.findById(id)
+                .orElseThrow(()->new RuntimeException("Videojuego no encontrado"));
+
+        videojuegoRepository.delete(videojuego);
+
+    }
+
+
+
 }

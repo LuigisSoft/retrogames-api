@@ -22,16 +22,27 @@ public class VideoJuegoController {
 
     //creo los videojuegos
     @PostMapping
-    public VideojuegoResponse crearVideojuegos(@RequestBody VideojuegoRequest request){
-        return  videojuegoService.crearVideojuego(request);
+    public VideojuegoResponse crearVideojuegos(@RequestBody VideojuegoRequest request) {
+        return videojuegoService.crearVideojuego(request);
     }
+
     //obtengo todos los videjuegos
-   @GetMapping
-    public List<VideojuegoResponse> obtenerVideojeugos(){
+    @GetMapping
+    public List<VideojuegoResponse> obtenerVideojuegos() {
         return videojuegoService.obtenerVideojuego();
-   }
+    }
 
+    @PutMapping("/{id}")
+    public VideojuegoResponse actualizarVideojuego(@PathVariable Long id, @RequestBody VideojuegoRequest request) {
+        return videojuegoService.actualizarVideojuego(id, request);
+    }
 
+    @DeleteMapping("/{id}")
+    public void eliminarVideojuegos(@PathVariable Long id) {
+        videojuegoService.eliminarVidejuego(id);
 
-
+    }
 }
+
+
+
