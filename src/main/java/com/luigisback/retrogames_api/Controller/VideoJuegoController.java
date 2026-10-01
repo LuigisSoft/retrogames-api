@@ -5,6 +5,7 @@ import com.luigisback.retrogames_api.Entity.Videojuego;
 import com.luigisback.retrogames_api.Service.VideojuegoService;
 import com.luigisback.retrogames_api.dto.VideojuegoRequest;
 import com.luigisback.retrogames_api.dto.VideojuegoResponse;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,7 +23,7 @@ public class VideoJuegoController {
 
     //creo los videojuegos
     @PostMapping
-    public VideojuegoResponse crearVideojuegos(@RequestBody VideojuegoRequest request) {
+    public VideojuegoResponse crearVideojuegos(@Valid @RequestBody VideojuegoRequest request) {
         return videojuegoService.crearVideojuego(request);
     }
 
@@ -33,7 +34,7 @@ public class VideoJuegoController {
     }
 
     @PutMapping("/{id}")
-    public VideojuegoResponse actualizarVideojuego(@PathVariable Long id, @RequestBody VideojuegoRequest request) {
+    public VideojuegoResponse actualizarVideojuego(@PathVariable Long id,@Valid @RequestBody VideojuegoRequest request) {
         return videojuegoService.actualizarVideojuego(id, request);
     }
 
