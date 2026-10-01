@@ -1,6 +1,7 @@
 package com.luigisback.retrogames_api.Service;
 
 import com.luigisback.retrogames_api.Entity.Videojuego;
+import com.luigisback.retrogames_api.Exception.VideojuegoNotFoundException;
 import com.luigisback.retrogames_api.Repository.VideojuegoRepository;
 import com.luigisback.retrogames_api.dto.VideojuegoRequest;
 import com.luigisback.retrogames_api.dto.VideojuegoResponse;
@@ -66,7 +67,7 @@ public class VideojuegoService {
 
     public VideojuegoResponse actualizarVideojuego(Long id, VideojuegoRequest request){
         Videojuego videojuego=videojuegoRepository.findById(id)
-                .orElseThrow(()->new RuntimeException("Videojuego no encontrado"));
+                .orElseThrow(()->new VideojuegoNotFoundException("Videojuego no encontrado"));
 
         videojuego.setTitulo(request.getTitulo());
         videojuego.setPlataforma(request.getPlataforma());
@@ -91,7 +92,7 @@ public class VideojuegoService {
 
     public void  eliminarVidejuego(Long id){
         Videojuego videojuego=videojuegoRepository.findById(id)
-                .orElseThrow(()->new RuntimeException("Videojuego no encontrado"));
+                .orElseThrow(()->new VideojuegoNotFoundException("Videojuego no encontrado"));
 
         videojuegoRepository.delete(videojuego);
 
