@@ -9,11 +9,12 @@ public class VideojuegoRequest {
 
     @NotBlank(message = "El título es oblitorio")
     String titulo;
-    @NotBlank(message = "El título es oblitorio")
+    @NotBlank(message = "La plataforma es oblitoria")
     String plataforma;
     @Min(value = 1970, message = "El año debe ser como mínimo 1970")
     @Max(value = 2026, message = "El año debe ser como máximo 2026")
     int year;
+    @NotNull(message = "El precio es obligatorio")
     @Positive(message = "El precio debe ser mayor de 0")
     BigDecimal precio;
     @NotNull(message = "El estado es obligatorio")

@@ -38,6 +38,25 @@ public class VideojuegoService {
                 .collect(Collectors.toList());
     }
 
+    public VideojuegoResponse obtenerPorId(Long id) {
+
+        Videojuego videojuego = videojuegoRepository.findById(id)
+                .orElseThrow(() -> new VideojuegoNotFoundException(
+                        "Videojuego no encontrado"
+                ));
+
+        VideojuegoResponse response = new VideojuegoResponse();
+
+        response.setId(videojuego.getId());
+        response.setTitulo(videojuego.getTitulo());
+        response.setPlataforma(videojuego.getPlataforma());
+        response.setYear(videojuego.getYear());
+        response.setPrecio(videojuego.getPrecio());
+        response.setEstado(videojuego.getEstado());
+
+        return response;
+    }
+
 
 
 
