@@ -5,6 +5,8 @@ import com.luigisback.retrogames_api.Exception.VideojuegoNotFoundException;
 import com.luigisback.retrogames_api.Repository.VideojuegoRepository;
 import com.luigisback.retrogames_api.dto.VideojuegoRequest;
 import com.luigisback.retrogames_api.dto.VideojuegoResponse;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -115,6 +117,33 @@ public class VideojuegoService {
 
         videojuegoRepository.delete(videojuego);
 
+    }
+
+    private VideojuegoResponse convertirAResponse(Videojuego videojuego) {
+
+        VideojuegoResponse response = new VideojuegoResponse();
+
+        response.setId(videojuego.getId());
+        response.setTitulo(videojuego.getTitulo());
+        response.setPrecio(videojuego.getPrecio());
+        response.setPlataforma(videojuego.getPlataforma());
+        response.setEstado(videojuego.getEstado());
+        response.setYear(videojuego.getYear());
+
+        return response;
+    }
+
+    public Page<VideojuegoResponse> obtenerVideojuegosPaginados(Pageable pageable) {
+
+        return videojuegoRepository.findAll(pageable)
+                .map(this::convertirAResponse);
+    }
+
+    public List<VideojuegoResponse> buscarPorTitulo(String titulo) {
+        return videojuegoRepository.findByTituloContainingIgnoreCase(titulo)
+                .stream()
+                .map(this::convertirAResponse)
+                .toList();
     }
 
 

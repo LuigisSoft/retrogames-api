@@ -4,6 +4,8 @@ import com.luigisback.retrogames_api.Service.VideojuegoService;
 import com.luigisback.retrogames_api.dto.VideojuegoRequest;
 import com.luigisback.retrogames_api.dto.VideojuegoResponse;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -33,6 +35,11 @@ public class VideoJuegoController {
         return videojuegoService.obtenerVideojuego();
     }
 
+    @GetMapping("/pagina")
+    public Page<VideojuegoResponse> obtenerVideojuegosPaginados(Pageable pageable) {
+        return videojuegoService.obtenerVideojuegosPaginados(pageable);
+    }
+
     @GetMapping("/{id}")
     public VideojuegoResponse obtenerVideojuegoPorId(@PathVariable Long id) {
         return videojuegoService.obtenerPorId(id);
@@ -50,5 +57,10 @@ public class VideoJuegoController {
     public ResponseEntity<Void> eliminarVideojuegos(@PathVariable Long id) {
         videojuegoService.eliminarVidejuego(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/buscar")
+    public List<VideojuegoResponse> buscarPorTitulo(@RequestParam String titulo) {
+        return videojuegoService.buscarPorTitulo(titulo);
     }
 }
