@@ -1,5 +1,6 @@
 package com.luigisback.retrogames_api.Service;
 
+import com.luigisback.retrogames_api.Entity.EstadoVideojuego;
 import com.luigisback.retrogames_api.Entity.Videojuego;
 import com.luigisback.retrogames_api.Exception.VideojuegoNotFoundException;
 import com.luigisback.retrogames_api.Repository.VideojuegoRepository;
@@ -9,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -141,6 +143,27 @@ public class VideojuegoService {
 
     public List<VideojuegoResponse> buscarPorTitulo(String titulo) {
         return videojuegoRepository.findByTituloContainingIgnoreCase(titulo)
+                .stream()
+                .map(this::convertirAResponse)
+                .toList();
+    }
+
+    public List<VideojuegoResponse> buscarPorPlataforma(String plataforma) {
+        return videojuegoRepository.findByPlataformaIgnoreCase(plataforma)
+                .stream()
+                .map(this::convertirAResponse)
+                .toList();
+    }
+
+    public List<VideojuegoResponse> buscarPorEstado(EstadoVideojuego estado) {
+        return videojuegoRepository.findByEstado(estado)
+                .stream()
+                .map(this::convertirAResponse)
+                .toList();
+    }
+
+    public List<VideojuegoResponse> buscarPorRangoPrecio(BigDecimal precioMin, BigDecimal precioMax) {
+        return videojuegoRepository.findByPrecioBetween(precioMin, precioMax)
                 .stream()
                 .map(this::convertirAResponse)
                 .toList();

@@ -1,5 +1,6 @@
 package com.luigisback.retrogames_api.Controller;
 
+import com.luigisback.retrogames_api.Entity.EstadoVideojuego;
 import com.luigisback.retrogames_api.Service.VideojuegoService;
 import com.luigisback.retrogames_api.dto.VideojuegoRequest;
 import com.luigisback.retrogames_api.dto.VideojuegoResponse;
@@ -10,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -62,5 +64,23 @@ public class VideoJuegoController {
     @GetMapping("/buscar")
     public List<VideojuegoResponse> buscarPorTitulo(@RequestParam String titulo) {
         return videojuegoService.buscarPorTitulo(titulo);
+    }
+
+    @GetMapping("/plataforma")
+    public List<VideojuegoResponse> buscarPorPlataforma(@RequestParam String plataforma) {
+        return videojuegoService.buscarPorPlataforma(plataforma);
+    }
+
+    @GetMapping("/estado")
+    public List<VideojuegoResponse> buscarPorEstado(@RequestParam EstadoVideojuego estado) {
+        return videojuegoService.buscarPorEstado(estado);
+    }
+
+    @GetMapping("/precio")
+    public List<VideojuegoResponse> buscarPorRangoPrecio(
+            @RequestParam BigDecimal precioMin,
+            @RequestParam BigDecimal precioMax) {
+
+        return videojuegoService.buscarPorRangoPrecio(precioMin, precioMax);
     }
 }
