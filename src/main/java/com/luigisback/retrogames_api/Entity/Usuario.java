@@ -3,15 +3,16 @@ package com.luigisback.retrogames_api.Entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
 public class Usuario {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nombre;
-    private String  apellidos;
+    private String apellidos;
     private String correo;
     private String direccion;
 
@@ -23,7 +24,7 @@ public class Usuario {
         this.id = id;
     }
 
-    public String getNombre( ) {
+    public String getNombre() {
         return this.nombre;
     }
 

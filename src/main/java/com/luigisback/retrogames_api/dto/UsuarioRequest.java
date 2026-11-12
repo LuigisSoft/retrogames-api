@@ -10,6 +10,7 @@ public class UsuarioRequest {
     private String direccion;
     @NotBlank(message = "Los apellidos son obligatorios")
     private String apellidos;
+    @NotBlank(message = "El correo es obligatorio")
     @Email(message = "El correo es obligatorio")
     private String correo;
 

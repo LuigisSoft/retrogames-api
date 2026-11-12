@@ -2,12 +2,13 @@ package com.luigisback.retrogames_api.dto;
 
 public class UsuarioResponse {
 
+    private Long id;
     private String nombre;
     private String direccion;
     private String apellidos;
     private String correo;
 
-    private Long id;
+
 
     public Long getId() {
         return id;
